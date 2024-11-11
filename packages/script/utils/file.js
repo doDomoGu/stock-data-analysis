@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir, access } from "node:fs/promises";
+import { readFile, writeFile, mkdir, access, appendFile } from "node:fs/promises";
 import path from "path";
 
 async function checkAndCreateDir(dirPath) {
@@ -19,6 +19,17 @@ export async function write(filePath, content) {
     await checkAndCreateDir(dirPath);
     await writeFile(filePath, content); // 异步写入文件
     console.log("数据已保存到文件");
+  } catch (error) {
+    console.error("发生错误:", error);
+  }
+}
+
+export async function append(filePath, content) {
+  try {
+    const dirPath = path.parse(filePath).dir;
+    await checkAndCreateDir(dirPath);
+    await appendFile(filePath, content); // 异步写入文件
+    console.log("数据已添加到文件");
   } catch (error) {
     console.error("发生错误:", error);
   }
