@@ -5,7 +5,7 @@ import request from '../../utils/request.js'
 const tableData = ref([])
 
 onMounted(async () => {
-  const res = await request.get('/stock-list')
+  const res = await request.get('/stock/list')
 
   tableData.value = res
 })

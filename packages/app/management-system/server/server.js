@@ -1,16 +1,12 @@
-import express from 'express'
-import connection from './utils/db.js'
+require('module-alias/register')
+
+const express = require('express')
+
+const router = require('./src/router')
+
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.get('/stock-list', async (req, res) => {
-  const queryStr = 'select * from `stocks`'
-  const [results] = await connection.query(queryStr)
-  res.send(results)
-})
+app.use('/', router)
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {

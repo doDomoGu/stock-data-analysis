@@ -66,6 +66,9 @@ importers:
       express:
         specifier: ^4.21.1
         version: 4.21.1
+      module-alias:
+        specifier: ^2.2.3
+        version: 2.2.3
       mysql2:
         specifier: ^3.11.4
         version: 3.11.4
@@ -1301,6 +1304,9 @@ packages:
 
   mitt@3.0.1:
     resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
+  module-alias@2.2.3:
+    resolution: {integrity: sha512-23g5BFj4zdQL/b6tor7Ji+QY4pEfNH784BMslY9Qb0UnJWRAt+lQGLYmRaM0KDBwIG23ffEBELhZDP2rhi9f/Q==}
 
   mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
@@ -2969,6 +2975,8 @@ snapshots:
       brace-expansion: 1.1.11
 
   mitt@3.0.1: {}
+
+  module-alias@2.2.3: {}
 
   mrmime@2.0.0: {}
 
