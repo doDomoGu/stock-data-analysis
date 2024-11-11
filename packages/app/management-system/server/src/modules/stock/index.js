@@ -1,9 +1,9 @@
 const express = require('express')
-const list = require('./list')
-
 
 const router = express.Router()
 
-router.use('/list', list)
+router.use('/list', require('./list'))
+router.use('/info', require('./info'))
+router.use('/data', require('./data'))
 
 module.exports = router

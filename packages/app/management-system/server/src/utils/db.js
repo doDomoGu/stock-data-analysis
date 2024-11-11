@@ -1,7 +1,7 @@
-const mysql = require('mysql2')
+const mysql = require('mysql2/promise')
 const dbconfig = require('../dbconfig')
-const connection = mysql.createConnection({
+const getConnection = async () => await mysql.createConnection({
   ...dbconfig
 })
 
-module.exports = connection
+module.exports = getConnection
