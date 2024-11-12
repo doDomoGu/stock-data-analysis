@@ -29,7 +29,7 @@ export async function append(filePath, content) {
     const dirPath = path.parse(filePath).dir;
     await checkAndCreateDir(dirPath);
     await appendFile(filePath, content); // 异步写入文件
-    console.log("数据已添加到文件");
+    // console.log("数据已添加到文件");
   } catch (error) {
     console.error("发生错误:", error);
   }
