@@ -37,11 +37,29 @@ onMounted(async () => {
 
   tableTotal.value = res.total
 })
+
+const handlePaginationChange = async (currentPage, pageSize) => {
+  const res = await request.get('/stock/data', {
+    params: {
+      code: route.params.code,
+      page_num: currentPage,
+      page_size: pageSize,
+    },
+  })
+  tableData.value = res.list.map((n) => ({
+    ...n,
+    date: dayjs(n.date).format('YYYY-MM-DD'),
+    open: parseFloat(n.open).toFixed(2),
+    close: parseFloat(n.close).toFixed(2),
+    highest: parseFloat(n.highest).toFixed(2),
+    lowest: parseFloat(n.lowest).toFixed(2),
+  }))
+}
 </script>
 
 <template>
   <div>
-    <div>
+    <div class="my-2">
       {{ info.name }}
       {{ info.code }}
     </div>
@@ -55,8 +73,17 @@ onMounted(async () => {
         <el-table-column prop="lowest" label="最低价" />
       </el-table>
     </div>
-    <div>
-      <el-pagination background layout="prev, pager, next" :total="tableTotal" />
+    <div class="mt-2 flex">
+      <div class="flex-1"></div>
+      <div class="flex-none">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="tableTotal"
+          :page-size="20"
+          @change="handlePaginationChange"
+        />
+      </div>
     </div>
   </div>
 </template>
