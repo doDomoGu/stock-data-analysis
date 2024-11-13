@@ -9,7 +9,7 @@ const run = async () => {
   console.time("runTime");
 
   const startNo = 600000
-  const updateOnePiece = 100 // 可以把10000 整除
+  const updateOnePiece = 200 // 可以把10000 整除
   const outsideNo = 100000 / updateOnePiece
   for (let i = 0; i < outsideNo; i++) {
     const funcs = []
@@ -25,7 +25,7 @@ const run = async () => {
     const results = await Promise.all(funcs)
     // console.log(results)
     const filterResults = results.filter(n => n != false)
-    // console.log(startNo + (i * updateOnePiece), ': ', results.length, '/', filterResults.length)
+    console.log(startNo + (i * updateOnePiece), ': ', results.length, '/', filterResults.length)
     if (filterResults.length > 0) {
       updateStocks(filterResults)
     }

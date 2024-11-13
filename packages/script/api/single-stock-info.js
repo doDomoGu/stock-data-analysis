@@ -23,6 +23,7 @@ const getInfo = async (stockCode) => {
       secid: `${(stockCode[0] == "6" ? "1" : "0")}.${stockCode}`,
       fields: [
         'f43', // 最新价
+        'f57', // 股票代码
         'f58', // 名称
         'f189', // 上市日期
         'f288', // 0 正常 -1 退市
@@ -75,18 +76,21 @@ const getInfo = async (stockCode) => {
   //   f189: 19991110,
   //   f190: 7.619366542217 // 每股未分配利润
   // }
-  await appendFile("./cache/stock-info/log_" + (Date.parse(new Date()) / 1000) + ".json",
-    stockCode + '| ' + JSON.stringify(res.data) + "\n"
+
+  await appendFile("./cache/stock-info/log.json",
+    (Date.parse(new Date()) / 1000) + '|' + stockCode + ', ' + JSON.stringify(res.data) + "\n"
   )
   if (res.data == null) {
     return false
   }
   // console.log(res.data)
+
+
   const info = {
     code: stockCode,
     name: res.data.f58,
     open_date: res.data.f189 == '-' ? null : dayjs(String(res.data.f189)).format('YYYY-MM-DD'),
-    cur_price: res.data.f288 == 0 ? (parseFloat(res.data.f43) / 100).toFixed(2) : null,
+    cur_price: res.data.f288 == 0 && res.data.f43 != '-' ? (parseFloat(res.data.f43) / 100).toFixed(2) : null,
     is_open: res.data.f189 == '-' ? 1 : res.data.f288  // 上市日期:'-' 表示"未上市"
   }
 
