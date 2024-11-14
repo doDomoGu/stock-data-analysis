@@ -5,6 +5,8 @@ const router = express.Router()
 const getConnection = require('@utils/db')
 
 router.get('/', async (req, res) => {
+  const connection = await getConnection()
+
   const query = {
     sort_name: 'date',
     sort_type: 'DESC',
@@ -12,7 +14,7 @@ router.get('/', async (req, res) => {
     page_size: 20,
     ...req.query
   }
-  const connection = await getConnection()
+
   const [[totalResults], [listResults]] = await Promise.all([
     connection.query(
       `select count(*) as total from \`data_${query.code}\``

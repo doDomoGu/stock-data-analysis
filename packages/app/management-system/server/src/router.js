@@ -3,9 +3,9 @@ const stock = require('./modules/stock')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// router.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 router.use('/stock', stock)
 

@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import dayjs from 'dayjs'
-import request from '../../utils/request.js'
+import request from '@/utils/request.js'
 
 const route = useRoute()
 

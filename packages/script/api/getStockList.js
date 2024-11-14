@@ -98,31 +98,33 @@ const getData = async () => {
     },
   });
 
+  const handleValue = (v) => v != '-' ? v : null
+
 
   const data = res.data.diff.filter(n => n.f2 != null)
     .map(n =>
       `(` +
       `'${n.f12}',` + // code
       `'${n.f14}',` + // name
-      `'${n.f2}',` + // 最新价 cur_price
-      `'${n.f17}',` + // 今开 today_open
-      `'${n.f18}',` + // 昨收 yesterday_close
-      `'${n.f3}',` + // 涨跌幅(%) percentage_change
-      `'${n.f4}',` + // 涨跌额 price_change
-      `'${n.f5}',` + // 成交量(手) volume
-      `'${n.f6}',` + // 成交额 amount
-      `'${n.f7}',` + // 振幅(%) volatility
-      `'${n.f8}',` + // 换手率(%) turnover_rate
-      `'${n.f9}',` + // 市盈率 per
-      `'${n.f10}',` + // 量比 qrr
-      `'${n.f15}',` + // 最高价 highest
-      `'${n.f16}',` + // 最低价 lowest
-      `'${n.f20}',` + // 总市值 total_market_value
-      `'${n.f21}',` + // 流通市值 circulating_market_value
-      `'${n.f22}',` + // 涨速(%) growth_rate
-      `'${n.f23}',` + // 市净率 pbr
-      `'${n.f24}',` + // 60日涨跌幅 60_days_percentage_change
-      `'${n.f25}'` + // 年初至今涨跌幅 this_year_percentage_change
+      `${handleValue(n.f2)},` + // 最新价 cur_price
+      `${handleValue(n.f17)},` + // 今开 today_open
+      `${handleValue(n.f18)},` + // 昨收 yesterday_close
+      `${handleValue(n.f3)},` + // 涨跌幅(%) percentage_change
+      `${handleValue(n.f4)},` + // 涨跌额 price_change
+      `${handleValue(n.f5)},` + // 成交量(手) volume
+      `${handleValue(n.f6)},` + // 成交额 amount
+      `${handleValue(n.f7)},` + // 振幅(%) volatility
+      `${handleValue(n.f8)},` + // 换手率(%) turnover_rate
+      `${handleValue(n.f9)},` + // 市盈率 per
+      `${handleValue(n.f10)},` + // 量比 qrr
+      `${handleValue(n.f15)},` + // 最高价 highest
+      `${handleValue(n.f16)},` + // 最低价 lowest
+      `${handleValue(n.f20)},` + // 总市值 total_market_value
+      `${handleValue(n.f21)},` + // 流通市值 circulating_market_value
+      `${handleValue(n.f22)},` + // 涨速(%) growth_rate
+      `${handleValue(n.f23)},` + // 市净率 pbr
+      `${handleValue(n.f24)},` + // 60日涨跌幅 60_days_percentage_change
+      `${handleValue(n.f25)}` + // 年初至今涨跌幅 this_year_percentage_change
       `)`
     )
 
