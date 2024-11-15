@@ -21,25 +21,41 @@ const handlePaginationChange = async (currentPage, pageSize) => {
   })
   tableData.value = res.list
 }
+
+const handleSortChange = async ({ prop, order }) => {
+  const res = await request.get('/stock/list', {
+    params: {
+      // page_num: currentPage,
+      // page_size: pageSize,
+      sort_name: prop,
+      sort_type: order == 'ascending' ? 'ASC' : 'DESC',
+    },
+  })
+  tableData.value = res.list
+}
+
+const amountFormatter = (row) => {
+  return parseFloat(row.amount / 10000 / 10000).toFixed(2) + '亿'
+}
 </script>
 
 <template>
   <div>
     <div>股票列表</div>
     <div>
-      <el-table :data="tableData" style="width: 100%" border>
+      <el-table :data="tableData" style="width: 100%" border @sort-change="handleSortChange">
         <el-table-column type="index" />
-        <el-table-column prop="code" label="代码" width="100" />
+        <el-table-column prop="code" label="代码" width="100" sortable="custom" />
         <el-table-column prop="name" label="名称" />
-        <el-table-column prop="cur_price" label="最新价" />
-        <el-table-column prop="percentage_change" label="涨跌幅(%)" />
+        <el-table-column prop="cur_price" label="最新价" sortable="custom" />
+        <el-table-column prop="percentage_change" label="涨跌幅(%)" sortable="custom" />
         <el-table-column prop="price_change" label="涨跌额" />
         <el-table-column prop="today_open" label="今开" />
         <el-table-column prop="yesterday_close" label="昨收" />
         <el-table-column prop="highest" label="最高价" />
         <el-table-column prop="lowest" label="最低价" />
         <el-table-column prop="volume" label="成交量(手)VOL" />
-        <el-table-column prop="amount" label="成交额" />
+        <el-table-column prop="amount" label="成交额" :formatter="amountFormatter" />
         <el-table-column prop="volatility" label="振幅(%)" />
         <el-table-column prop="turnover_rate" label="换手率(%)" />
         <el-table-column prop="per" label="市盈率" />
