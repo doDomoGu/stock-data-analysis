@@ -1,6 +1,13 @@
 <script setup>
-import { RouterView } from 'vue-router';
+import { RouterView } from 'vue-router'
+import Header from './header'
 </script>
+
 <template>
-  <RouterView />
+  <div>
+    <Header />
+    <div class="px-4">
+      <RouterView />
+    </div>
+  </div>
 </template>
