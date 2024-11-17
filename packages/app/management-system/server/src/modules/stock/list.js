@@ -25,10 +25,12 @@ router.get('/', async (req, res) => {
       `select count(*) as total from \`stocks\`` + (query.filter_abnormal ? ` where cur_price is not null` : '')
     ),
     connection.query(
-      `select * from \`stocks\`` + (query.filter_abnormal ? ` where cur_price  is not null` : '') + ` order by \`${query.sort_name}\` ${query.sort_type} limit ?,?`,
+      `select * from \`stocks\`` + (query.filter_abnormal ? ` where cur_price  is not null` : '') + ` order by \`${query.sort_name}\` ${query.sort_type}, \`code\` DESC limit ?,?`,
       [(query.page_num - 1) * query.page_size, query.page_size]
     )
   ])
+
+  connection.end()
 
   res.send({
     total: totalResults[0].total,

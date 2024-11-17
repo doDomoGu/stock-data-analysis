@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
 import request from '@/utils/request'
+import TableColumn from '@/components/table-column'
 import tableColumnsConfig from './tableColumnsConfig'
 
 const queryParams = reactive({
@@ -56,7 +57,7 @@ const handleSortChange = async ({ prop, order }) => {
           order: queryParams.sort_type == 'DESC' ? 'descending' : 'ascending',
         }"
       >
-        <el-table-column v-for="item in tableColumnsConfig" :key="item" v-bind="{ ...item }" />
+        <TableColumn v-for="item in tableColumnsConfig" :key="item" v-bind="{ ...item }" />
       </el-table>
     </div>
     <div class="mt-2 flex">
