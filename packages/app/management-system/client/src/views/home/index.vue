@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive } from 'vue'
-import request from '@/utils/request.js'
+import request from '@/utils/request'
+import tableColumnsConfig from './tableColumnsConfig'
 
 const queryParams = reactive({
   page_num: 1,
@@ -37,28 +38,13 @@ const handleSortChange = async ({ prop, order }) => {
   queryParams.sort_type = order == 'ascending' ? 'ASC' : 'DESC'
   const res = await request.get('/stock/list', {
     params: queryParams,
-    // params: {
-    //   // page_num: currentPage,
-    //   // page_size: pageSize,
-    //   sort_name: prop,
-    //   sort_type: order == 'ascending' ? 'ASC' : 'DESC',
-    // },
   })
   tableData.value = res.list
-}
-
-const fixed2Formatter = (row, col) => {
-  return parseFloat(row[col.property]).toFixed(2)
-}
-
-const amountFormatter = (row) => {
-  return parseFloat(row.amount / 10000 / 10000).toFixed(2) + '亿'
 }
 </script>
 
 <template>
-  <div>
-    <div>股票列表</div>
+  <div class="p-2">
     <div>
       <el-table
         :data="tableData"
@@ -70,36 +56,7 @@ const amountFormatter = (row) => {
           order: queryParams.sort_type == 'DESC' ? 'descending' : 'ascending',
         }"
       >
-        <el-table-column type="index" />
-        <el-table-column prop="code" label="代码" width="100" sortable="custom" />
-        <el-table-column prop="name" label="名称" />
-        <el-table-column
-          prop="cur_price"
-          label="最新价"
-          sortable="custom"
-          align="right"
-          :formatter="fixed2Formatter"
-          :class-name="'font-[Monaco]'"
-        />
-        <el-table-column
-          prop="percentage_change"
-          label="涨跌幅(%)"
-          sortable="custom"
-          align="right"
-          :formatter="fixed2Formatter"
-          :class-name="'font-[Monaco]'"
-        />
-        <el-table-column prop="price_change" label="涨跌额" />
-        <el-table-column prop="today_open" label="今开" />
-        <el-table-column prop="yesterday_close" label="昨收" />
-        <el-table-column prop="highest" label="最高价" />
-        <el-table-column prop="lowest" label="最低价" />
-        <el-table-column prop="volume" label="成交量(手)VOL" />
-        <el-table-column prop="amount" label="成交额" :formatter="amountFormatter" />
-        <el-table-column prop="volatility" label="振幅(%)" />
-        <el-table-column prop="turnover_rate" label="换手率(%)" />
-        <el-table-column prop="per" label="市盈率" />
-        <el-table-column prop="qrr" label="量比" />
+        <el-table-column v-for="item in tableColumnsConfig" :key="item" v-bind="{ ...item }" />
       </el-table>
     </div>
     <div class="mt-2 flex">

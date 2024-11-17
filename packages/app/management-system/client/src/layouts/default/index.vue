@@ -4,10 +4,6 @@ import Header from './header'
 </script>
 
 <template>
-  <div>
-    <Header />
-    <div class="px-4">
-      <RouterView />
-    </div>
-  </div>
+  <Header />
+  <RouterView />
 </template>
