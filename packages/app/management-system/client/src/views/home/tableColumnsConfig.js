@@ -73,6 +73,7 @@ const config = [
     attrs: numberMix({
       prop: "volume",
       label: "成交量(手)",
+      minWidth: 110,
       formatter: volFormatter
     })
   },
@@ -138,7 +139,21 @@ const config = [
       label: "市盈率",
       formatter: fixed2Formatter
     }),
-  }
+  },
+  {
+    attrs: {
+      prop: "open_date",
+      label: "上市日期",
+      minWidth: 110
+    },
+  },
+  // {
+  //   attrs: {
+  //     prop: "is_open",
+  //     label: "状态",
+  //     // formatter: fixed2Formatter
+  //   },
+  // }
 ]
 
 

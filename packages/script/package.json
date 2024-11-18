@@ -8,6 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "rebuild:calendar": "node calendar/index.js",
     "rebuild:stockList": "node saveStockList.js",
+    "rebuild:stocks": "node run/updateStocks.js",
+    "rebuild:stocksOpenDate": "node run/updateStocksOpenDate.js",
     "rebuild:data": "node data/index.js"
   },
   "author": "",
