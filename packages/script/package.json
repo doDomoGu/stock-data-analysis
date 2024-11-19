@@ -10,6 +10,7 @@
     "rebuild:stockList": "node saveStockList.js",
     "rebuild:stocks": "node run/updateStocks.js",
     "rebuild:stocksOpenDate": "node run/updateStocksOpenDate.js",
+    "rebuild:stockData": "node run/updateStockData.js",
     "rebuild:data": "node data/index.js"
   },
   "author": "",

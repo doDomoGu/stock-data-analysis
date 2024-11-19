@@ -21,7 +21,7 @@ const stockList = [
 const createTable = async (stockCode) => {
   await connection.execute(`DROP TABLE IF EXISTS \`data_${stockCode}\` `)
   await connection.query(
-    `CREATE TABLE \`data_${stockCode}\` (
+    `CREATE TABLE IF NOT EXISTS \`data_${stockCode}\` (
     \`date\` DATETIME NOT NULL,
     \`open\` FLOAT NULL COMMENT '开盘价',
     \`close\` FLOAT NULL COMMENT '收盘价',
