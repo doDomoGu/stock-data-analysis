@@ -40,7 +40,8 @@ const getData = async (stockCode) => {
     const data = []
     klines.forEach(n => {
       const [date, open, close, highest, lowest, volumne, amount, volatility, percentage_change, price_change, turnover_rate] = n.split(',')
-      data.push(`('${date}', ${open}, ${close}, ${highest}, ${lowest}, ${volumne}, ${amount}, ${volatility}, ${percentage_change}, ${price_change}, ${turnover_rate})`)
+      data.push(`('${date}', '${stockCode}', ${open}, ${close}, ${highest}, ${lowest}, ${volumne}, ${amount}, ${volatility}, ${percentage_change}, ${price_change}, ${turnover_rate})`)
+      // data.push(`('${date}', ${open}, ${close}, ${highest}, ${lowest}, ${volumne}, ${amount}, ${volatility}, ${percentage_change}, ${price_change}, ${turnover_rate})`)
     })
     // console.log(data)
     return data
