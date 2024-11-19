@@ -13,12 +13,12 @@ const run = async () => {
   // console.log(data2)
   // return false
 
-  const codes = await getStockCodesFromDb()
+  const codes = (await getStockCodesFromDb()).sort(() => 0.5 - Math.random())
   // console.log(codes)
 
   // const data = await getData()
   const total = codes.length
-  const onePiece = 20
+  const onePiece = 200
   const pieceNum = Math.ceil(total / onePiece)
 
   // 将codes分片
@@ -50,7 +50,7 @@ const run = async () => {
       await updateOpenDateToDb.updateOpenDate(updateData)
     }
 
-    await ((ms) => new Promise(resolve => setTimeout(resolve, ms)))(Math.random() * 500)
+    await ((ms) => new Promise(resolve => setTimeout(resolve, ms)))(Math.random() * 200)
 
     // return false
   }

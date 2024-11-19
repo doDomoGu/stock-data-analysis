@@ -46,6 +46,11 @@ const config = [
     attrs: {
       prop: 'name',
       label: '名称',
+    },
+    link: {
+      routerName: 'stock',
+      getParams: (row) => ({ code: row.code }),
+      getText: (row) => `${row.name}`
     }
   },
   {

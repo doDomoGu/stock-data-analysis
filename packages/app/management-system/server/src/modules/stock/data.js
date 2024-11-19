@@ -17,10 +17,10 @@ router.get('/', async (req, res) => {
 
   const [[totalResults], [listResults]] = await Promise.all([
     connection.query(
-      `select count(*) as total from \`data_${query.code}\``
+      `select count(*) as total from \`stocks_data\``
     ),
     connection.query(
-      `select * from \`data_${query.code}\` order by \`${query.sort_name}\` ${query.sort_type} limit ?,?`,
+      `select * from \`stocks_data\` where \`code\` = '${query.code}' order by \`${query.sort_name}\` ${query.sort_type} limit ?,?`,
       [parseInt((query.page_num - 1) * query.page_size), parseInt(query.page_size)]
     )
   ])

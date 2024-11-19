@@ -59,9 +59,16 @@ const handlePaginationChange = async (currentPage, pageSize) => {
 
 <template>
   <div>
-    <div class="my-2">
-      {{ info.name }}
-      {{ info.code }}
+    <div class="my-2 flex items-center">
+      <div class="text-sm mr-8">
+        <router-link to="/">&lt;返回</router-link>
+      </div>
+      <div class="text-xl mr-1">
+        {{ info.name }}
+      </div>
+      <div class="text-lg mr-1">
+        {{ info.code }}
+      </div>
     </div>
     <div>
       <el-table :data="tableData" style="width: 100%" border>

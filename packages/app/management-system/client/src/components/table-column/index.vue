@@ -2,16 +2,23 @@
 defineProps({
   attrs: Object,
   render: Function,
+  link: Object,
 })
-
-// console.log('props.render', props.render, props.render ? '111' : '222')
-// props.render && props.render()
 </script>
 
 <template>
   <el-table-column v-bind="{ ...attrs }">
-    <template v-if="render" #default="{ row, column }">
-      <div v-html="render(row, column)"></div>
+    <template #default="{ row, column }">
+      <template v-if="render">
+        <div v-html="render(row, column)"></div>
+      </template>
+      <template v-if="link">
+        <el-link type="primary">
+          <router-link :to="{ name: link.routerName, params: link.getParams(row) }">{{
+            link.getText(row)
+          }}</router-link>
+        </el-link>
+      </template>
     </template>
   </el-table-column>
 </template>
