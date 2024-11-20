@@ -15,14 +15,14 @@ const updateOpenDate = async (values) => {
       //`,\`is_open\``+
       `) VALUES ` + values.join(","))
 
-    const queryStr =
-      "UPDATE `stocks` S " +
-      "INNER JOIN `stocks_open_date` O ON S.code = O.code " +
-      "SET S.open_date = O.open_date"
-    // + ", S.is_open = O.is_open"
-    // console.log("queryStr: ", queryStr);
+    // const queryStr =
+    //   "UPDATE `stocks` S " +
+    //   "INNER JOIN `stocks_open_date` O ON S.code = O.code " +
+    //   "SET S.open_date = O.open_date"
+    // // + ", S.is_open = O.is_open"
+    // // console.log("queryStr: ", queryStr);
 
-    await connection.execute(queryStr);
+    // await connection.execute(queryStr);
 
     // await connection.execute(`DROP TABLE \`stocks_open_date\``)
 

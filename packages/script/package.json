@@ -6,10 +6,12 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "rebuild:calendar": "node calendar/index.js",
+    "rebuild:calendar": "node run/buildCalendar.js",
     "rebuild:stocks": "node run/updateStocks.js",
     "rebuild:stocksOpenDate": "node run/updateStocksOpenDate.js",
     "rebuild:stockData": "node run/updateStockData.js",
+    "rebuild:stocksMA": "node run/updateStocksMA.js",
+    "rebuild:all": "pnpm run rebuild:stocks && pnpm run rebuild:stocksOpenDate && pnpm run rebuild:stockData",
     "xxrebuild:stockList": "node saveStockList.js",
     "xxrebuild:data": "node data/index.js"
   },

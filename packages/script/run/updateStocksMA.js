@@ -1,13 +1,15 @@
-import getStockDataFromApi from '../api/getStockData.js'
 import getStockCodesFromDb from '../db/get-stock-codes.js'
-import updateStockDataToDb from '../db/update-stock-data.js'
+import * as updateStockMAToDb from '../db/update-stocks-ma.js'
 
 const run = async () => {
   console.log("start");
   console.time("runTime");
-
-  // 重建数据表 stocks_data
-  await updateStockDataToDb.createTable()
+  await updateStockMAToDb.getStartDateByMA('601298', [10, 20, 30, 333, 444, 555, 666, 777, 888, 999])
+  await updateStockMAToDb.getStartDateByMA('601288', [10, 20, 50, 610])
+  console.log('sdsad')
+  process.exit(0)
+  // 重建数据表 stocks_ma
+  await updateStockMAToDb.createTable()
 
   // 获取codes列表
   const codes = (await getStockCodesFromDb()).map(n => n.code).sort(() => 0.5 - Math.random()) // .slice(0, 10)

@@ -22,6 +22,8 @@ const run = async () => {
 
   console.log("end");
   console.timeEnd("runTime");
+
+  process.exit(0)
 };
 
 run();
