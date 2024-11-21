@@ -6,10 +6,14 @@ const run = async () => {
   console.log("start");
   console.time("runTime");
 
-  // 重建数据表 stocks_data
+  // 参数配置
+  const apiGetDataLimit = 10
+
+
+  // 创建数据表 stocks_data
   await updateStockDataToDb.createTable()
 
-  // 获取codes列表
+  // 通过[stocks表]获取codes列表
   const codes = (await getStockCodesFromDb()).map(n => n.code).sort(() => 0.5 - Math.random()) // .slice(0, 10)
   // codes.push({ code: '688573' })
 
@@ -18,7 +22,7 @@ const run = async () => {
   // return false
 
   // 将codes分片
-  const piece = 50
+  const piece = 100   // 一片包含的数量
   const pieces = Math.ceil(total / piece)
 
   const codeArrItems = []
@@ -33,22 +37,11 @@ const run = async () => {
     console.time('runTimeOne')
 
     // await Promise.all(codeArr.map(code => updateStockDataToDb.createTable(code)))
-    const datas = await Promise.all(codeArr.map(code => getStockDataFromApi(code)))
+    const datas = await Promise.all(codeArr.map(code => getStockDataFromApi(code, apiGetDataLimit)))
 
     for (let data of datas.filter(n => Array.isArray(n))) {
       await updateStockDataToDb.updateData(data)
     }
-    // const updateDbItems = []
-    // for (let i = 0; i < codeArr.length; i++) {
-    //   updateDbItems.push({
-    //     code: codeArr[i],
-    //     data: datas[i]
-    //   })
-    // }
-
-    // for (let updateDbItem of updateDbItems) {
-    //   await updateStockDataToDb.updateData(updateDbItem.code, updateDbItem.data)
-    // }
     n = n + piece
     console.log(`${n} / ${total}`)
     console.timeEnd('runTimeOne')

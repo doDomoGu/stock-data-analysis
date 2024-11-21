@@ -4,7 +4,7 @@ import dayjs from 'dayjs'
 
 // import { append as appendFile } from "./utils/file.js";
 
-const getData = async (stockCode) => {
+const getData = async (stockCode, limit = 1000) => {
   const url = "https://push2his.eastmoney.com/api/qt/stock/kline/get";
 
   const params = {
@@ -25,7 +25,7 @@ const getData = async (stockCode) => {
     params: {
       ...params,
       secid: (stockCode[0] == "6" ? "1" : "0") + "." + stockCode,
-      lmt: 1000, // 获取历史n天数据
+      lmt: limit, // 获取历史n天数据
     },
   });
   // console.log(res);
