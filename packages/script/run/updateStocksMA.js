@@ -4,15 +4,12 @@ import * as updateStockMAToDb from '../db/update-stocks-ma.js'
 const run = async () => {
   console.log("start");
   console.time("runTime");
-  await updateStockMAToDb.getStartDateByMA('601298', [10, 20, 30, 333, 444, 555, 666, 777, 888, 999])
-  await updateStockMAToDb.getStartDateByMA('601288', [10, 20, 50, 610])
-  console.log('sdsad')
-  process.exit(0)
+
   // 重建数据表 stocks_ma
-  await updateStockMAToDb.createTable()
+  // await updateStockMAToDb.createTable()
 
   // 获取codes列表
-  const codes = (await getStockCodesFromDb()).map(n => n.code).sort(() => 0.5 - Math.random()) // .slice(0, 10)
+  const codes = (await updateStockMAToDb.getCodes()).map(n => n.code).sort(() => 0.5 - Math.random()) // .slice(0, 10)
   // codes.push({ code: '688573' })
 
   const total = codes.length
@@ -34,22 +31,41 @@ const run = async () => {
     console.log('========')
     console.time('runTimeOne')
 
-    // await Promise.all(codeArr.map(code => updateStockDataToDb.createTable(code)))
-    const datas = await Promise.all(codeArr.map(code => getStockDataFromApi(code)))
+    const datas = await updateStockMAToDb.getMA(codeArr)
 
-    for (let data of datas.filter(n => Array.isArray(n))) {
-      await updateStockDataToDb.updateData(data)
-    }
-    // const updateDbItems = []
-    // for (let i = 0; i < codeArr.length; i++) {
-    //   updateDbItems.push({
-    //     code: codeArr[i],
-    //     data: datas[i]
-    //   })
-    // }
+    const updateDatas = ((datas) => {
+      const dataMap = new Map()
+      datas.forEach(n => {
+        const k = JSON.stringify({ code: n.code, date: n.date })
+        const v = { val: parseFloat(n.val).toFixed(2), num: n.num, real_num: n.real_num }
+        if (dataMap.has(k)) {
+          dataMap.set(k, [...dataMap.get(k), v])
+        } else {
+          dataMap.set(k, [v])
+        }
+      })
+      // console.log('dataMap.length', Array.from(dataMap).length)
+      // console.log('dataMap', Array.from(dataMap))
 
-    // for (let updateDbItem of updateDbItems) {
-    //   await updateStockDataToDb.updateData(updateDbItem.code, updateDbItem.data)
+      const ret = []
+      for (let [mK, mV] of dataMap) {
+        ret.push({
+          ...(JSON.parse(mK)),
+          ma_values: mV
+        })
+      }
+
+      return ret
+
+    })(datas)
+
+    // console.log('updateDatas: ', updateDatas)
+    // console.log('updateDatas.length:', updateDatas.length)
+
+    await updateStockMAToDb.updateData(updateDatas)
+
+    // for (let data of datas.filter(n => Array.isArray(n))) {
+    //   await updateStockDataToDb.updateData(data)
     // }
     n = n + piece
     console.log(`${n} / ${total}`)
@@ -57,31 +73,6 @@ const run = async () => {
     console.log(' ')
   }
 
-  // return false
-  // let n = 0
-  // for (let code of codes) {
-  //   console.log('=============')
-  //   console.log(`${++n} / ${total}`, code)
-  //   console.time(code)
-  //   await updateStockDataToDb.createTable(code)
-
-  //   const data = await getStockDataFromApi(code)
-  //   console.log('data_rows count:', data.length)
-  //   const onePiece = 100
-  //   const pieceNum = Math.ceil(data.length / onePiece)
-
-  //   const items = []
-  //   for (let i = 0; i < pieceNum; i++) {
-  //     items.push(data.slice(i * onePiece, i * onePiece + onePiece))
-  //   }
-
-  //   for (let item of items) {
-  //     await updateStockDataToDb.updateData(code, item)
-  //   }
-  //   console.timeEnd(code)
-  //   console.log(' ')
-  //   await ((ms) => new Promise(resolve => setTimeout(resolve, ms)))(Math.random() * 1200)
-  // }
 
   console.log("end");
   console.timeEnd("runTime");
