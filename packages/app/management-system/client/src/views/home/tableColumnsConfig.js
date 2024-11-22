@@ -1,4 +1,4 @@
-import { fixed2Formatter, amountFormatter, volFormatter, fixed2PercentFormatter, upDownFormatter, chainsFormatter, upDownCellClass } from "@/utils/tableFunctions"
+import { fixed2Formatter, amountFormatter, volFormatter, fixed2PercentFormatter } from "@/utils/tableFunctions"
 
 
 const numFixed2 = (v) => parseFloat(v).toFixed(2)
@@ -8,7 +8,7 @@ const numberMix = (cfgItem) => ({
   align: "right",
   className: 'font-[Monaco]',
   sortable: "custom",
-  minWidth: 100,
+  minWidth: 80,
   ...cfgItem
 })
 
@@ -39,6 +39,8 @@ const config = [
     attrs: {
       prop: 'code',
       label: '代码',
+      align: 'center',
+      className: 'font-[Monaco]',
       sortable: 'custom'
     }
   },
