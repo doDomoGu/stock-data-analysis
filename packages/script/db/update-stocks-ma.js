@@ -27,10 +27,25 @@ export const getCodes = async (date = dayjs().format('YYYY-MM-DD')) => {
   }
 }
 
-export const getMA = async (codes, dates = [dayjs().format('YYYY-MM-DD')], nums = [10, 20, 50, 610]) => {
+
+export const getLastDate = async () => {
+  const conn = await getConnection()
+  try {
+    const [result, fields] = await connection.query("select `date` from `calendar` where `date` <= \"" + dayjs().format('YYYY-MM-DD') + "\" and is_open = 1 order by date desc limit 1");
+    if (result && result.length > 0) {
+      return dayjs(result[0].date).format('YYYY-MM-DD')
+    } else {
+      return false
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+
+export const getMA = async (codes, dates, nums = [10, 20, 50, 610]) => {
   const conn = await getConnection()
   // const eDate = dayjs(endDate).format('YYYY-MM-DD')
-
   console.time('db getMA')
 
   const getOne = async (code, date, num) => {

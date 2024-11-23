@@ -7,14 +7,17 @@ const run = async () => {
 
   // 重建数据表 stocks_ma
   // await updateStockMAToDb.createTable()
+  const lastDate = await updateStockMAToDb.getLastDate()
+  !lastDate && process.exit(1)
 
+  const dates = [lastDate]
   // 获取codes列表
-  const codes = (await updateStockMAToDb.getCodes()).map(n => n.code).sort(() => 0.5 - Math.random()) // .slice(0, 10)
+  const codes = (await updateStockMAToDb.getCodes(lastDate)).map(n => n.code).sort(() => 0.5 - Math.random()) // .slice(0, 10)
   // codes.push({ code: '688573' })
 
   const total = codes.length
-  // console.log('ss', Object.prototype.toString.call(codes), codes, total)
-  // return false
+  // console.log(total, lastDate)
+  // process.exit(0)
 
   // 将codes分片
   const piece = 50
@@ -31,7 +34,8 @@ const run = async () => {
     console.log('========')
     console.time('runTimeOne')
 
-    const datas = await updateStockMAToDb.getMA(codeArr)
+
+    const datas = await updateStockMAToDb.getMA(codeArr, dates)
 
     const updateDatas = ((datas) => {
       const dataMap = new Map()
